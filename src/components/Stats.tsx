@@ -6,21 +6,20 @@ const stats = [
   {
     value: 18,
     suffix: "+",
-    prefix: "",
     label: "Anos de Expertise",
     sublabel: "Experiência jurídica consolidada",
+    isDecimal: false,
   },
   {
     value: 5,
     suffix: "mi+",
-    prefix: "",
     label: "Em Investimentos",
     sublabel: "Assessorados e estruturados",
+    isDecimal: false,
   },
   {
     value: 1.8,
     suffix: "",
-    prefix: "",
     label: "NPS de Satisfação",
     sublabel: "Clientes que recomendam",
     isDecimal: true,
@@ -28,9 +27,9 @@ const stats = [
   {
     value: 18,
     suffix: "+",
-    prefix: "",
     label: "Estados Atendidos",
     sublabel: "Presença nacional",
+    isDecimal: false,
   },
 ];
 
@@ -72,13 +71,16 @@ function CounterItem({
       }`}
       style={{ transitionDelay: `${index * 120}ms` }}
     >
-      <div className="text-5xl lg:text-6xl font-black text-white mb-2 leading-none tabular-nums">
-        <span className="text-[#E3531F]">{stat.prefix}</span>
+      <div className="text-5xl lg:text-6xl font-black mb-2 leading-none tabular-nums">
         <span className="text-gradient-orange">{displayValue}</span>
-        <span className="text-[#F0861C]">{stat.suffix}</span>
+        <span style={{ color: "var(--c-orange-bright)" }}>{stat.suffix}</span>
       </div>
-      <div className="text-white font-semibold text-lg mb-1">{stat.label}</div>
-      <div className="text-white/40 text-sm">{stat.sublabel}</div>
+      <div className="font-semibold text-lg mb-1" style={{ color: "var(--t-primary)" }}>
+        {stat.label}
+      </div>
+      <div className="text-sm" style={{ color: "var(--t-muted)" }}>
+        {stat.sublabel}
+      </div>
     </div>
   );
 }
@@ -90,9 +92,7 @@ export default function Stats() {
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting && !triggered) {
-          setTriggered(true);
-        }
+        if (entry.isIntersecting && !triggered) setTriggered(true);
       },
       { threshold: 0.3 }
     );
@@ -101,15 +101,25 @@ export default function Stats() {
   }, [triggered]);
 
   return (
-    <section id="numeros" className="py-24 bg-[#0d2530] relative overflow-hidden">
-      {/* Background elements */}
+    <section
+      id="numeros"
+      className="py-24 relative overflow-hidden"
+      style={{ background: "var(--bg-base)" }}
+    >
+      {/* Ambient glows */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 left-1/4 w-80 h-80 bg-[#E3531F]/10 rounded-full blur-[80px]" />
-        <div className="absolute bottom-0 right-1/4 w-60 h-60 bg-[#F0861C]/10 rounded-full blur-[60px]" />
+        <div
+          className="absolute top-0 left-1/4 w-80 h-80 rounded-full"
+          style={{ background: "var(--c-orange-glow)", filter: "blur(80px)" }}
+        />
+        <div
+          className="absolute bottom-0 right-1/4 w-60 h-60 rounded-full"
+          style={{ background: "rgba(201,74,26,0.08)", filter: "blur(60px)" }}
+        />
       </div>
 
-      {/* Geometric lines */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-5">
+      {/* Grid pattern */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden" style={{ opacity: 0.03 }}>
         <svg className="w-full h-full">
           <defs>
             <pattern id="stat-grid" width="80" height="80" patternUnits="userSpaceOnUse">
@@ -120,37 +130,45 @@ export default function Stats() {
         </svg>
       </div>
 
-      <div ref={sectionRef} className="max-w-7xl mx-auto px-6 relative z-10">
-        {/* Header */}
+      <div ref={sectionRef} className="section-container relative z-10">
         <div
           className={`text-center mb-16 transition-all duration-700 ${
             triggered ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
-          <div className="inline-flex items-center gap-2 bg-[#E3531F]/15 border border-[#E3531F]/30 text-[#F0861C] px-4 py-1.5 rounded-full text-xs font-semibold tracking-widest uppercase mb-6">
-            Nossos Números
-          </div>
-          <h2 className="text-4xl lg:text-5xl font-black text-white">
+          <div className="label-tag mb-6 mx-auto w-fit">Nossos Números</div>
+          <h2 className="text-section-title">
             Resultados que{" "}
             <span className="text-gradient-orange">falam por si.</span>
           </h2>
         </div>
 
-        {/* Stats grid */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
           {stats.map((stat, i) => (
             <CounterItem key={i} stat={stat} index={i} triggered={triggered} />
           ))}
         </div>
 
-        {/* Map decoration */}
         <div
           className={`mt-20 text-center transition-all duration-700 delay-500 ${
             triggered ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
-          <div className="inline-flex items-center gap-3 bg-white/5 border border-white/10 text-white/60 px-6 py-3 rounded-full text-sm">
-            <span className="w-2 h-2 bg-[#E3531F] rounded-full animate-pulse" />
+          <div
+            className="inline-flex items-center gap-3 px-6 py-3 rounded-full text-sm"
+            style={{
+              background: "var(--bg-overlay)",
+              border: "1px solid var(--b-visible)",
+              color: "var(--t-secondary)",
+            }}
+          >
+            <span
+              className="w-2 h-2 rounded-full"
+              style={{
+                background: "var(--c-orange)",
+                animation: "fadeIn 1s ease-in-out infinite alternate",
+              }}
+            />
             Atendemos clientes em todo o Brasil e no exterior
           </div>
         </div>

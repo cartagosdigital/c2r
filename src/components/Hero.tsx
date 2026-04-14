@@ -3,23 +3,14 @@
 import { useEffect, useRef } from "react";
 import { ArrowRight, Zap, Shield, Globe } from "lucide-react";
 
-// The C2R geometric symbol as decorative SVG
-function C2RSymbol({
-  className,
-  opacity = 0.08,
-}: {
-  className?: string;
-  opacity?: number;
-}) {
+function C2RMark({ className }: { className?: string }) {
   return (
     <svg
       viewBox="0 0 200 200"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={className}
-      style={{ opacity }}
     >
-      {/* C curve */}
       <path
         d="M30 55 L85 30 L85 80 L30 105 Q10 120 30 135 L85 110 L85 80"
         stroke="white"
@@ -28,10 +19,8 @@ function C2RSymbol({
         strokeLinejoin="round"
         strokeLinecap="round"
       />
-      {/* 2 arrows */}
       <path d="M100 30 L150 52 L150 78 L100 56 Z" fill="white" />
       <path d="M100 83 L150 105 L150 131 L100 109 Z" fill="white" />
-      {/* R shape */}
       <path
         d="M162 30 L180 52 L162 74 L144 52 Z"
         stroke="white"
@@ -57,178 +46,208 @@ const badges = [
 ];
 
 export default function Hero() {
-  const heroRef = useRef<HTMLElement>(null);
+  const parallaxRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      if (!heroRef.current) return;
-      const { clientX, clientY } = e;
-      const { innerWidth, innerHeight } = window;
-      const xPct = (clientX / innerWidth - 0.5) * 20;
-      const yPct = (clientY / innerHeight - 0.5) * 20;
-      const geoEl = heroRef.current.querySelector(".geo-parallax") as HTMLElement;
-      if (geoEl) {
-        geoEl.style.transform = `translate(${xPct}px, ${yPct}px)`;
-      }
+      if (!parallaxRef.current) return;
+      const xPct = (e.clientX / window.innerWidth - 0.5) * 18;
+      const yPct = (e.clientY / window.innerHeight - 0.5) * 18;
+      parallaxRef.current.style.transform = `translate(${xPct}px, ${yPct}px)`;
     };
-
-    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mousemove", handleMouseMove, { passive: true });
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
   return (
     <section
       id="hero"
-      ref={heroRef}
-      className="relative min-h-screen flex items-center overflow-hidden bg-[#0d2530]"
+      className="relative min-h-screen flex items-center overflow-hidden"
+      style={{ background: "var(--bg-base)" }}
     >
-      {/* Background gradient mesh */}
+      {/* Ambient glows */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 right-0 w-[700px] h-[700px] bg-[#E3531F]/20 rounded-full blur-[120px] -translate-y-1/3 translate-x-1/3" />
-        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-[#F0861C]/10 rounded-full blur-[100px] translate-y-1/3 -translate-x-1/4" />
-        <div className="absolute top-1/2 left-1/2 w-[400px] h-[400px] bg-[#244C99]/15 rounded-full blur-[80px] -translate-x-1/2 -translate-y-1/2" />
+        <div
+          className="absolute top-0 right-0 w-[600px] h-[600px] rounded-full -translate-y-1/3 translate-x-1/3"
+          style={{ background: "var(--c-orange-glow)", filter: "blur(120px)" }}
+        />
+        <div
+          className="absolute bottom-0 left-0 w-[400px] h-[400px] rounded-full translate-y-1/3 -translate-x-1/4"
+          style={{ background: "rgba(201,74,26,0.06)", filter: "blur(100px)" }}
+        />
       </div>
 
-      {/* Geometric grid lines */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <svg className="absolute inset-0 w-full h-full" style={{ opacity: 0.05 }}>
+      {/* Subtle grid */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden" style={{ opacity: 0.04 }}>
+        <svg className="absolute inset-0 w-full h-full">
           <defs>
-            <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
+            <pattern id="hero-grid" width="60" height="60" patternUnits="userSpaceOnUse">
               <path d="M 60 0 L 0 0 0 60" fill="none" stroke="white" strokeWidth="0.5" />
             </pattern>
           </defs>
-          <rect width="100%" height="100%" fill="url(#grid)" />
+          <rect width="100%" height="100%" fill="url(#hero-grid)" />
         </svg>
       </div>
 
-      {/* Large decorative C2R symbol — right side */}
+      {/* Ghost C2R mark */}
       <div
-        className="geo-parallax absolute right-[-80px] top-1/2 -translate-y-1/2 transition-transform duration-300 ease-out pointer-events-none"
+        ref={parallaxRef}
+        className="absolute right-[-60px] top-1/2 -translate-y-1/2 transition-transform duration-500 ease-out pointer-events-none"
+        style={{ opacity: 0.04 }}
       >
-        <C2RSymbol className="w-[500px] h-[500px] animate-float-slow" opacity={0.06} />
+        <C2RMark className="w-[540px] h-[540px] float" />
       </div>
 
-      {/* Diagonal orange line accent */}
-      <div className="absolute top-0 right-1/3 w-px h-full bg-gradient-to-b from-transparent via-[#E3531F]/30 to-transparent" />
+      {/* Vertical accent line */}
+      <div
+        className="absolute top-0 right-1/3 w-px h-full pointer-events-none"
+        style={{
+          background: "linear-gradient(to bottom, transparent, var(--b-orange) 40%, var(--b-orange) 60%, transparent)",
+        }}
+      />
 
       {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 pt-28 pb-20 grid lg:grid-cols-2 gap-12 items-center">
-        {/* Left content */}
+      <div className="section-container relative z-10 pt-28 pb-20 grid lg:grid-cols-2 gap-12 items-center">
+        {/* Left */}
         <div>
-          {/* Tag */}
           <div
-            className="inline-flex items-center gap-2 bg-[#E3531F]/15 border border-[#E3531F]/30 text-[#F0861C] px-4 py-1.5 rounded-full text-xs font-semibold tracking-widest uppercase mb-8"
-            style={{ animation: "fadeUp 0.6s ease-out forwards" }}
+            className="label-tag mb-8 anim-fade"
+            style={{ animationDelay: "0s" }}
           >
-            <span className="w-1.5 h-1.5 bg-[#F0861C] rounded-full animate-pulse" />
+            <span
+              className="w-1.5 h-1.5 rounded-full"
+              style={{ background: "var(--c-orange-bright)", animation: "fadeIn 1s ease infinite alternate" }}
+            />
             Parceira Jurídica de Inovação
           </div>
 
-          {/* Headline */}
           <h1
-            className="text-5xl lg:text-6xl xl:text-7xl font-black text-white leading-[0.9] tracking-tight mb-6"
-            style={{ animation: "fadeUp 0.6s ease-out 0.1s both" }}
+            className="text-hero mb-6 anim-up"
+            style={{ animationDelay: "0.1s" }}
           >
             O Jurídico
             <br />
             <span className="text-gradient-orange">das Techs.</span>
           </h1>
 
-          {/* Subheadline */}
           <p
-            className="text-white/60 text-lg lg:text-xl font-light leading-relaxed max-w-xl mb-10"
-            style={{ animation: "fadeUp 0.6s ease-out 0.2s both" }}
+            className="text-lg font-light leading-relaxed max-w-xl mb-10 anim-up"
+            style={{
+              color: "var(--t-secondary)",
+              animationDelay: "0.2s",
+            }}
           >
             Somos mais do que um escritório de advocacia.
             Somos sua{" "}
-            <strong className="text-white font-semibold">parceira estratégica</strong>{" "}
-            — com tecnologia acima de burocracia e colaboração acima de competição.
+            <strong style={{ color: "var(--t-primary)", fontWeight: 600 }}>parceira estratégica</strong>
+            {" "}— tecnologia acima de burocracia, colaboração acima de competição.
           </p>
 
-          {/* CTA Buttons */}
           <div
-            className="flex flex-wrap gap-4 mb-12"
-            style={{ animation: "fadeUp 0.6s ease-out 0.3s both" }}
+            className="flex flex-wrap gap-4 mb-12 anim-up"
+            style={{ animationDelay: "0.3s" }}
           >
             <a
               href="#contato"
-              className="group flex items-center gap-2 bg-gradient-to-r from-[#E3531F] to-[#F0861C] text-white px-7 py-3.5 rounded-xl font-semibold text-base hover:shadow-2xl hover:shadow-[#E3531F]/30 transition-all duration-300 hover:-translate-y-1"
+              className="btn-primary group"
             >
               Vem voar na nave C2R
-              <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+              <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform duration-200" />
             </a>
             <a
               href="#servicos"
-              className="flex items-center gap-2 border border-white/20 text-white/80 hover:text-white hover:border-white/40 px-7 py-3.5 rounded-xl font-medium text-base transition-all duration-300"
+              className="btn-ghost"
             >
               Nossos serviços
             </a>
           </div>
 
-          {/* Badges */}
           <div
-            className="flex flex-wrap gap-3"
-            style={{ animation: "fadeUp 0.6s ease-out 0.4s both" }}
+            className="flex flex-wrap gap-3 anim-up"
+            style={{ animationDelay: "0.4s" }}
           >
             {badges.map(({ icon: Icon, label }) => (
               <div
                 key={label}
-                className="flex items-center gap-2 bg-white/5 border border-white/10 text-white/70 px-4 py-2 rounded-full text-sm font-medium"
+                className="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium"
+                style={{
+                  background: "var(--bg-overlay)",
+                  border: "1px solid var(--b-subtle)",
+                  color: "var(--t-secondary)",
+                }}
               >
-                <Icon size={13} className="text-[#F0861C]" />
+                <Icon size={13} style={{ color: "var(--c-orange-bright)" }} />
                 {label}
               </div>
             ))}
           </div>
         </div>
 
-        {/* Right — decorative visual block */}
+        {/* Right — floating cards */}
         <div className="hidden lg:flex flex-col gap-4 items-end">
-          {/* Floating card 1 */}
           <div
-            className="animate-float bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-5 max-w-xs w-full"
-            style={{ animationDelay: "0s" }}
+            className="float p-5 rounded-2xl max-w-xs w-full"
+            style={{
+              background: "var(--bg-overlay)",
+              border: "1px solid var(--b-subtle)",
+              animationDelay: "0s",
+            }}
           >
             <div className="flex items-center gap-3 mb-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-[#E3531F] to-[#F0861C] rounded-xl flex items-center justify-center">
+              <div
+                className="w-10 h-10 rounded-xl flex items-center justify-center"
+                style={{ background: "linear-gradient(135deg, var(--c-orange), var(--c-orange-bright))" }}
+              >
                 <Zap size={18} className="text-white" />
               </div>
               <div>
-                <div className="text-white font-semibold text-sm">Assessoria Ágil</div>
-                <div className="text-white/40 text-xs">Resposta em até 24h</div>
+                <div className="font-semibold text-sm" style={{ color: "var(--t-primary)" }}>
+                  Assessoria Ágil
+                </div>
+                <div className="text-xs" style={{ color: "var(--t-muted)" }}>
+                  Resposta em até 24h
+                </div>
               </div>
             </div>
-            <div className="text-white/50 text-xs leading-relaxed">
+            <p className="text-xs leading-relaxed" style={{ color: "var(--t-secondary)" }}>
               Contratos, compliance e consultoria jurídica com a velocidade que sua startup precisa.
+            </p>
+          </div>
+
+          <div
+            className="float p-5 rounded-2xl max-w-xs w-full mr-8"
+            style={{
+              background: "rgba(201,74,26,0.10)",
+              border: "1px solid var(--b-orange)",
+              animationDelay: "2s",
+            }}
+          >
+            <div className="text-4xl font-black text-gradient-orange mb-1">+5mi</div>
+            <div className="text-sm" style={{ color: "var(--t-secondary)" }}>
+              em investimentos assessorados
             </div>
           </div>
 
-          {/* Floating card 2 */}
           <div
-            className="animate-float bg-gradient-to-br from-[#E3531F]/20 to-[#F0861C]/10 backdrop-blur-sm border border-[#E3531F]/20 rounded-2xl p-5 max-w-xs w-full mr-8"
-            style={{ animationDelay: "2s" }}
+            className="float p-5 rounded-2xl max-w-[200px] w-full"
+            style={{
+              background: "var(--bg-overlay)",
+              border: "1px solid var(--b-subtle)",
+              animationDelay: "4s",
+            }}
           >
-            <div className="text-4xl font-black text-gradient-orange mb-1">+5mi</div>
-            <div className="text-white/60 text-sm">em investimentos assessorados</div>
-          </div>
-
-          {/* Floating card 3 */}
-          <div
-            className="animate-float bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-5 max-w-[200px] w-full"
-            style={{ animationDelay: "4s" }}
-          >
-            <div className="text-3xl font-black text-white mb-1">+18</div>
-            <div className="text-white/50 text-xs">anos de expertise jurídica</div>
+            <div className="text-3xl font-black mb-1" style={{ color: "var(--t-primary)" }}>
+              +18
+            </div>
+            <div className="text-xs" style={{ color: "var(--t-secondary)" }}>
+              anos de expertise jurídica
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Bottom diagonal cut */}
-      <div className="absolute bottom-0 left-0 right-0">
-        <svg viewBox="0 0 1440 80" preserveAspectRatio="none" className="w-full h-16">
-          <path d="M0 80 L1440 20 L1440 80 Z" fill="white" />
-        </svg>
-      </div>
+      {/* Bottom section divider */}
+      <div className="absolute bottom-0 left-0 right-0 section-divider" />
     </section>
   );
 }

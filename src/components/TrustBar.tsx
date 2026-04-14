@@ -1,51 +1,67 @@
 "use client";
 
 const clients = [
-  { name: "ABEP", abbr: true },
-  { name: "HUB", abbr: true },
-  { name: "Adept", abbr: false },
-  { name: "ECHBA", abbr: true },
-  { name: "fatel", abbr: false },
-  { name: "eazy", abbr: false },
-  { name: "Paytech", abbr: false },
-  { name: "InvestBR", abbr: false },
-  { name: "DataLaw", abbr: false },
-  { name: "StartLegal", abbr: false },
+  "ABEP",
+  "HUB",
+  "Adept",
+  "ECHBA",
+  "fatel",
+  "eazy",
+  "Paytech",
+  "InvestBR",
+  "DataLaw",
+  "StartLegal",
 ];
 
-// Duplicate for seamless marquee
 const doubled = [...clients, ...clients];
 
 export default function TrustBar() {
   return (
-    <section className="py-16 bg-white border-b border-gray-100 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6 mb-10 text-center">
-        <p className="text-gray-400 text-sm font-medium tracking-widest uppercase">
+    <section
+      className="py-14 overflow-hidden"
+      style={{
+        background: "var(--bg-surface)",
+        borderBottom: "1px solid var(--b-subtle)",
+      }}
+    >
+      <div className="section-container mb-8 text-center">
+        <p
+          className="text-xs font-semibold tracking-widest uppercase"
+          style={{ color: "var(--t-muted)" }}
+        >
           Grandes marcas confiam na C2R
         </p>
       </div>
 
-      {/* Marquee */}
-      <div className="overflow-hidden relative group">
+      <div className="marquee-wrap overflow-hidden relative">
         {/* Fade edges */}
-        <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
-        <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
+        <div
+          className="absolute left-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
+          style={{ background: "linear-gradient(to right, var(--bg-surface), transparent)" }}
+        />
+        <div
+          className="absolute right-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
+          style={{ background: "linear-gradient(to left, var(--bg-surface), transparent)" }}
+        />
 
-        <div className="animate-marquee flex items-center gap-16">
-          {doubled.map((client, i) => (
+        <div className="marquee-track items-center gap-16">
+          {doubled.map((name, i) => (
             <div
               key={i}
-              className="flex-shrink-0 flex items-center gap-2 opacity-30 hover:opacity-70 transition-opacity duration-300 cursor-default"
+              className="flex-shrink-0 flex items-center gap-4 cursor-default select-none"
             >
-              {/* Logo placeholder — styled text */}
-              <div
-                className={`font-black text-2xl tracking-tight text-[#122E39] ${
-                  client.abbr ? "uppercase" : ""
-                }`}
+              <span
+                className="font-black text-2xl tracking-tight transition-colors duration-300"
+                style={{ color: "var(--t-muted)" }}
+                onMouseEnter={(e) => (e.currentTarget.style.color = "var(--t-secondary)")}
+                onMouseLeave={(e) => (e.currentTarget.style.color = "var(--t-muted)")}
               >
-                {client.name}
-              </div>
-              <div className="w-px h-6 bg-gray-200 ml-4" />
+                {name}
+              </span>
+              <span
+                className="w-px h-5"
+                style={{ background: "var(--b-subtle)" }}
+              />
             </div>
           ))}
         </div>

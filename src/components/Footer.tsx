@@ -1,3 +1,5 @@
+"use client";
+
 const InstagramIcon = () => (
   <svg viewBox="0 0 24 24" fill="currentColor" width="15" height="15">
     <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
@@ -46,10 +48,15 @@ const socials = [
 
 export default function Footer() {
   return (
-    <footer className="bg-[#090F12] text-white">
+    <footer style={{ background: "var(--bg-base)" }}>
       {/* CTA strip */}
-      <div className="bg-gradient-to-r from-[#E3531F] to-[#F0861C] py-12">
-        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
+      <div
+        className="py-12"
+        style={{
+          background: "linear-gradient(90deg, var(--c-orange), var(--c-orange-bright))",
+        }}
+      >
+        <div className="section-container flex flex-col md:flex-row items-center justify-between gap-6">
           <div>
             <h3 className="text-white text-2xl font-black mb-1">
               Pronto para decolar?
@@ -63,13 +70,18 @@ export default function Footer() {
               href="https://wa.me/5548991273767"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-white text-[#E3531F] px-6 py-3 rounded-xl font-bold text-sm hover:shadow-lg transition-all hover:-translate-y-0.5"
+              className="px-6 py-3 rounded-xl font-bold text-sm transition-all hover:shadow-lg hover:-translate-y-0.5"
+              style={{
+                background: "white",
+                color: "var(--c-orange)",
+              }}
             >
               WhatsApp agora
             </a>
             <a
               href="#contato"
-              className="border-2 border-white/40 text-white px-6 py-3 rounded-xl font-semibold text-sm hover:bg-white/10 transition-all"
+              className="px-6 py-3 rounded-xl font-semibold text-sm text-white transition-all hover:bg-white/10"
+              style={{ border: "2px solid rgba(255,255,255,0.4)" }}
             >
               Formulário
             </a>
@@ -78,7 +90,7 @@ export default function Footer() {
       </div>
 
       {/* Main footer */}
-      <div className="max-w-7xl mx-auto px-6 py-16">
+      <div className="section-container py-16">
         <div className="grid lg:grid-cols-5 gap-12 mb-12">
           {/* Brand */}
           <div className="lg:col-span-2">
@@ -92,36 +104,44 @@ export default function Footer() {
               >
                 <path
                   d="M18 35 L52 20 L52 50 L18 65 Q8 75 18 85 L52 70 L52 50"
-                  stroke="#E3531F"
+                  stroke="var(--c-orange)"
                   strokeWidth="3"
                   fill="none"
                   strokeLinejoin="round"
                   strokeLinecap="round"
                 />
-                <path d="M60 20 L90 35 L90 52 L60 37 Z" fill="#F0861C" />
-                <path d="M60 52 L90 67 L90 84 L60 69 Z" fill="#E3531F" />
+                <path d="M60 20 L90 35 L90 52 L60 37 Z" fill="var(--c-orange-bright)" />
+                <path d="M60 52 L90 67 L90 84 L60 69 Z" fill="var(--c-orange)" />
                 <path
                   d="M98 20 L110 35 L98 50 L86 35 Z"
-                  stroke="#E3531F"
+                  stroke="var(--c-orange)"
                   strokeWidth="2.5"
                   fill="none"
                 />
                 <path
                   d="M98 50 L110 65 L98 80"
-                  stroke="#E3531F"
+                  stroke="var(--c-orange)"
                   strokeWidth="2.5"
                   fill="none"
                   strokeLinecap="round"
                 />
               </svg>
               <div>
-                <div className="text-white font-black text-xl leading-none">C2R</div>
-                <div className="text-[#F0861C] text-[10px] font-medium tracking-widest uppercase">
+                <div className="font-black text-xl leading-none" style={{ color: "var(--t-primary)" }}>
+                  C2R
+                </div>
+                <div
+                  className="text-[10px] font-medium tracking-widest uppercase"
+                  style={{ color: "var(--c-orange-bright)" }}
+                >
                   advocacia
                 </div>
               </div>
             </div>
-            <p className="text-white/40 text-sm leading-relaxed max-w-xs mb-6">
+            <p
+              className="text-sm leading-relaxed max-w-xs mb-6"
+              style={{ color: "var(--t-muted)" }}
+            >
               Parceira jurídica de empresas inovadoras. Tecnologia acima de
               burocracia. 100% digital, ágil e descomplicada.
             </p>
@@ -133,7 +153,19 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={label}
-                  className="w-9 h-9 bg-white/8 hover:bg-[#E3531F] rounded-lg flex items-center justify-center transition-colors duration-300"
+                  className="w-9 h-9 rounded-lg flex items-center justify-center transition-all duration-300"
+                  style={{
+                    background: "var(--bg-overlay)",
+                    color: "var(--t-secondary)",
+                  }}
+                  onMouseEnter={(e) => {
+                    (e.currentTarget as HTMLElement).style.background = "var(--c-orange)";
+                    (e.currentTarget as HTMLElement).style.color = "white";
+                  }}
+                  onMouseLeave={(e) => {
+                    (e.currentTarget as HTMLElement).style.background = "var(--bg-overlay)";
+                    (e.currentTarget as HTMLElement).style.color = "var(--t-secondary)";
+                  }}
                 >
                   <Icon />
                 </a>
@@ -144,13 +176,25 @@ export default function Footer() {
           {/* Links */}
           {Object.entries(links).map(([title, items]) => (
             <div key={title}>
-              <div className="text-white font-semibold text-sm mb-4">{title}</div>
+              <div
+                className="font-semibold text-sm mb-4"
+                style={{ color: "var(--t-primary)" }}
+              >
+                {title}
+              </div>
               <ul className="flex flex-col gap-2.5">
                 {items.map((item) => (
                   <li key={item.label}>
                     <a
                       href={item.href}
-                      className="text-white/40 hover:text-white text-sm transition-colors duration-200"
+                      className="text-sm transition-colors duration-200"
+                      style={{ color: "var(--t-muted)" }}
+                      onMouseEnter={(e) =>
+                        (e.currentTarget.style.color = "var(--t-primary)")
+                      }
+                      onMouseLeave={(e) =>
+                        (e.currentTarget.style.color = "var(--t-muted)")
+                      }
                     >
                       {item.label}
                     </a>
@@ -162,11 +206,14 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="border-t border-white/8 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-white/30 text-xs">
+        <div
+          className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4"
+          style={{ borderTop: "1px solid var(--b-subtle)" }}
+        >
+          <p className="text-xs" style={{ color: "var(--t-muted)" }}>
             © {new Date().getFullYear()} C2R Advocacia. Todos os direitos reservados.
           </p>
-          <p className="text-white/20 text-xs">
+          <p className="text-xs" style={{ color: "var(--t-muted)" }}>
             OAB/SC · Florianópolis, Brasil
           </p>
         </div>
