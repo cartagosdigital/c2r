@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import { Menu, X } from "lucide-react";
 
 const navLinks = [
@@ -42,54 +43,15 @@ export default function Header() {
     >
       <div className="section-container flex items-center justify-between">
         {/* Logo */}
-        <a href="#hero" className="flex items-center gap-3 group">
-          <svg
-            width="42"
-            height="42"
-            viewBox="0 0 120 120"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="transition-transform duration-300 group-hover:scale-105"
-          >
-            <path
-              d="M18 35 L52 20 L52 50 L18 65 Z"
-              fill="none"
-              stroke="var(--c-orange)"
-              strokeWidth="3"
-              strokeLinejoin="round"
-            />
-            <path
-              d="M18 65 Q8 75 18 85 L52 70 L52 50 L18 65 Z"
-              fill="none"
-              stroke="var(--c-orange)"
-              strokeWidth="3"
-              strokeLinejoin="round"
-            />
-            <path d="M60 20 L90 35 L90 52 L60 37 Z" fill="var(--c-orange-bright)" opacity="0.9" />
-            <path d="M60 52 L90 67 L90 84 L60 69 Z" fill="var(--c-orange)" opacity="0.9" />
-            <path
-              d="M98 20 L110 35 L98 50 L86 35 Z"
-              fill="none"
-              stroke="var(--c-orange)"
-              strokeWidth="2.5"
-              strokeLinejoin="round"
-            />
-            <path
-              d="M98 50 L110 65 L98 80"
-              fill="none"
-              stroke="var(--c-orange)"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-            />
-          </svg>
-          <div>
-            <div className="font-black text-xl leading-none tracking-tight" style={{ color: "var(--t-primary)" }}>
-              C2R
-            </div>
-            <div className="text-[10px] font-medium tracking-widest uppercase" style={{ color: "var(--c-orange-bright)" }}>
-              advocacia
-            </div>
-          </div>
+        <a href="#hero" className="flex items-center group">
+          <Image
+            src="/logo.png"
+            alt="C2R Advocacia"
+            width={140}
+            height={56}
+            priority
+            className="h-10 w-auto transition-transform duration-300 group-hover:scale-105"
+          />
         </a>
 
         {/* Desktop Nav */}

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { CheckCircle2, Rocket, Brain, Heart } from "lucide-react";
 
 const differentials = [
@@ -140,6 +141,34 @@ export default function About() {
               className="absolute -top-20 -right-20 w-60 h-60 rounded-full pointer-events-none"
               style={{ background: "var(--c-orange-glow)", filter: "blur(60px)" }}
             />
+
+            {/* Sócios photo */}
+            <div className="relative z-10 mb-8 -mx-8 -mt-8 overflow-hidden" style={{ borderBottom: "1px solid var(--b-visible)" }}>
+              <Image
+                src="/socios.jpg"
+                alt="Sócios C2R Advocacia"
+                width={1200}
+                height={800}
+                className="w-full h-72 object-cover"
+                style={{ filter: "saturate(0.95) contrast(1.05)" }}
+              />
+              <div
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                  background: "linear-gradient(180deg, rgba(8,8,8,0) 50%, rgba(8,8,8,0.85) 100%)",
+                }}
+              />
+              <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between">
+                <div>
+                  <div className="text-xs font-semibold tracking-widest uppercase" style={{ color: "var(--c-orange-bright)" }}>
+                    Sócios C2R
+                  </div>
+                  <div className="text-sm font-medium mt-0.5" style={{ color: "var(--t-primary)" }}>
+                    Liderança da banca
+                  </div>
+                </div>
+              </div>
+            </div>
 
             <div className="relative z-10 mb-8">
               <div

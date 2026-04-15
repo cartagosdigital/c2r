@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+
 const clients = [
   "ABEP",
   "HUB",
@@ -18,22 +20,41 @@ const doubled = [...clients, ...clients];
 export default function TrustBar() {
   return (
     <section
-      className="py-14 overflow-hidden"
+      className="relative py-20 overflow-hidden"
       style={{
         background: "var(--bg-surface)",
         borderBottom: "1px solid var(--b-subtle)",
       }}
     >
-      <div className="section-container mb-8 text-center">
+      {/* Team photo backdrop */}
+      <div className="absolute inset-0 pointer-events-none">
+        <Image
+          src="/team.jpg"
+          alt="Equipe C2R"
+          fill
+          className="object-cover"
+          style={{ opacity: 0.18, filter: "grayscale(0.6) contrast(1.05)" }}
+          sizes="100vw"
+        />
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(180deg, var(--bg-surface) 0%, rgba(14,14,15,0.55) 40%, rgba(14,14,15,0.55) 60%, var(--bg-surface) 100%)",
+          }}
+        />
+      </div>
+
+      <div className="section-container mb-8 text-center relative z-10">
         <p
           className="text-xs font-semibold tracking-widest uppercase"
-          style={{ color: "var(--t-muted)" }}
+          style={{ color: "var(--c-orange-bright)" }}
         >
           Grandes marcas confiam na C2R
         </p>
       </div>
 
-      <div className="marquee-wrap overflow-hidden relative">
+      <div className="marquee-wrap overflow-hidden relative z-10">
         {/* Fade edges */}
         <div
           className="absolute left-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
