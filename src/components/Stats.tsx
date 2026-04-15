@@ -81,7 +81,7 @@ function CounterItem({
       }`}
       style={{ transitionDelay: `${index * 120}ms` }}
     >
-      <div className="text-5xl lg:text-6xl font-black mb-2 leading-none tabular-nums">
+      <div className="text-5xl lg:text-6xl font-semibold mb-2 leading-none tabular-nums">
         <span className="text-gradient-orange">{displayValue}</span>
         <span style={{ color: "var(--c-orange-bright)" }}>{stat.suffix}</span>
       </div>

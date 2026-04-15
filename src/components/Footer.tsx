@@ -60,7 +60,7 @@ export default function Footer() {
       >
         <div className="section-container flex flex-col md:flex-row items-center justify-between gap-6">
           <div>
-            <h3 className="text-white text-2xl font-black mb-1">
+            <h3 className="text-white text-2xl font-semibold mb-1">
               Pronto para decolar?
             </h3>
             <p className="text-white/80 text-sm">

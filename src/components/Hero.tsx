@@ -107,7 +107,7 @@ export default function Hero() {
       />
 
       {/* Content */}
-      <div className="section-container relative z-10 pt-28 pb-20 grid lg:grid-cols-2 gap-12 items-center">
+      <div className="section-container relative z-10 pt-40 md:pt-44 lg:pt-48 pb-24 grid lg:grid-cols-2 gap-12 items-center">
         {/* Left */}
         <div>
           <div
@@ -222,7 +222,7 @@ export default function Hero() {
               animationDelay: "2s",
             }}
           >
-            <div className="text-4xl font-black text-gradient-orange mb-1">+5mi</div>
+            <div className="text-4xl font-semibold text-gradient-orange mb-1">+5mi</div>
             <div className="text-sm" style={{ color: "var(--t-secondary)" }}>
               em investimentos assessorados
             </div>
@@ -236,7 +236,7 @@ export default function Hero() {
               animationDelay: "4s",
             }}
           >
-            <div className="text-3xl font-black mb-1" style={{ color: "var(--t-primary)" }}>
+            <div className="text-3xl font-semibold mb-1" style={{ color: "var(--t-primary)" }}>
               +18
             </div>
             <div className="text-xs" style={{ color: "var(--t-secondary)" }}>

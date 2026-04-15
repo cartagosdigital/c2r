@@ -240,7 +240,7 @@ export default function Contact() {
                   <CheckCircle size={36} className="text-white" />
                 </div>
                 <h3
-                  className="text-2xl font-black mb-3"
+                  className="text-2xl font-semibold mb-3"
                   style={{ color: "var(--t-primary)" }}
                 >
                   Mensagem enviada!

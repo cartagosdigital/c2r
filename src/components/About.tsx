@@ -152,22 +152,6 @@ export default function About() {
                 className="w-full h-72 object-cover"
                 style={{ filter: "saturate(0.95) contrast(1.05)" }}
               />
-              <div
-                className="absolute inset-0 pointer-events-none"
-                style={{
-                  background: "linear-gradient(180deg, rgba(8,8,8,0) 50%, rgba(8,8,8,0.85) 100%)",
-                }}
-              />
-              <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between">
-                <div>
-                  <div className="text-xs font-semibold tracking-widest uppercase" style={{ color: "var(--c-orange-bright)" }}>
-                    Sócios C2R
-                  </div>
-                  <div className="text-sm font-medium mt-0.5" style={{ color: "var(--t-primary)" }}>
-                    Liderança da banca
-                  </div>
-                </div>
-              </div>
             </div>
 
             <div className="relative z-10 mb-8">
@@ -177,7 +161,7 @@ export default function About() {
               >
                 Nossa Essência
               </div>
-              <h3 className="text-2xl font-black" style={{ color: "var(--t-primary)" }}>
+              <h3 className="text-2xl font-semibold" style={{ color: "var(--t-primary)" }}>
                 O DNA da C2R
               </h3>
             </div>
@@ -214,21 +198,40 @@ export default function About() {
               ))}
             </div>
 
-            <div
-              className="relative z-10 mt-8 pt-6"
-              style={{ borderTop: "1px solid var(--b-subtle)" }}
-            >
-              <p className="text-sm italic leading-relaxed" style={{ color: "var(--t-muted)" }}>
-                &ldquo;O seu propósito nos inspira. É atuar como parceiras
-                estratégicas de iniciativas inovadoras, trabalhando juntos para
-                transformar o amanhã.&rdquo;
-              </p>
-              <div
-                className="text-xs font-semibold mt-2"
-                style={{ color: "var(--c-orange-bright)" }}
-              >
-                — Propósito C2R
+          </div>
+        </div>
+      </div>
+
+      {/* Team photo — full-width band */}
+      <div className="relative w-full mt-24 overflow-hidden" style={{ borderTop: "1px solid var(--b-subtle)", borderBottom: "1px solid var(--b-subtle)" }}>
+        <div className="relative h-[360px] md:h-[460px] lg:h-[520px]">
+          <Image
+            src="/team.jpg"
+            alt="Equipe C2R Advocacia"
+            fill
+            className="object-cover"
+            style={{ filter: "saturate(0.95) contrast(1.02)" }}
+            sizes="100vw"
+          />
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background:
+                "linear-gradient(180deg, rgba(20,20,22,0.55) 0%, rgba(20,20,22,0.2) 50%, rgba(20,20,22,0.75) 100%)",
+            }}
+          />
+          <div className="absolute inset-0 flex items-end">
+            <div className="section-container pb-10 md:pb-14">
+              <div className="text-xs font-semibold tracking-widest uppercase mb-2" style={{ color: "var(--c-orange-bright)" }}>
+                Equipe C2R
               </div>
+              <h3
+                className="text-2xl md:text-3xl font-semibold max-w-2xl"
+                style={{ color: "var(--t-primary)", lineHeight: 1.15, letterSpacing: "-0.02em" }}
+              >
+                Pessoas que unem rigor técnico, visão estratégica e compromisso
+                com cada mandato.
+              </h3>
             </div>
           </div>
         </div>
