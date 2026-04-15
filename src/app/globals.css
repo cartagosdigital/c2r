@@ -26,17 +26,17 @@
   --b-orange:  rgba(201, 74, 26, 0.35);
 }
 
-/* ─── Reset ───────────────────────────────────────── */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+/* ─── Base layer (must be layered so Tailwind utilities can override) ─── */
+@layer base {
+  html { scroll-behavior: smooth; font-size: 16px; }
 
-html { scroll-behavior: smooth; font-size: 16px; }
-
-body {
-  font-family: "Rubik", sans-serif;
-  background: var(--bg-base);
-  color: var(--t-primary);
-  overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
+  body {
+    font-family: "Rubik", sans-serif;
+    background: var(--bg-base);
+    color: var(--t-primary);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
 }
 
 /* ─── Scrollbar ───────────────────────────────────── */
