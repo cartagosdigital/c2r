@@ -153,24 +153,14 @@ export default function Stats() {
           </h2>
         </div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
-          {stats.map((stat, i) => (
-            <CounterItem key={i} stat={stat} index={i} triggered={triggered} />
-          ))}
-        </div>
-
         {/* Globe — presença internacional */}
         <div
-          className={`mt-24 grid lg:grid-cols-2 gap-12 lg:gap-16 items-center transition-all duration-700 delay-300 ${
+          className={`grid lg:grid-cols-2 gap-12 lg:gap-16 items-center transition-all duration-700 delay-200 ${
             triggered ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
           <div>
             <div className="label-tag mb-6">Presença Global</div>
-            <h3 className="text-section-title mb-6">
-              Onde a C2R{" "}
-              <span className="text-gradient-orange">atua.</span>
-            </h3>
             <p
               className="text-base leading-relaxed mb-8 max-w-md"
               style={{ color: "var(--t-secondary)" }}
@@ -208,6 +198,15 @@ export default function Stats() {
               speed={0.0025}
             />
           </div>
+        </div>
+
+        <div
+          className="grid grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 mt-24 pt-16"
+          style={{ borderTop: "1px solid var(--b-subtle)" }}
+        >
+          {stats.map((stat, i) => (
+            <CounterItem key={i} stat={stat} index={i} triggered={triggered} />
+          ))}
         </div>
       </div>
     </section>

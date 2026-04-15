@@ -53,7 +53,10 @@ export default function Footer() {
     <footer style={{ background: "var(--bg-base)" }}>
       {/* CTA strip */}
       <div
-        className="py-12"
+        className="section-container mt-16 mb-20"
+      >
+      <div
+        className="py-12 px-8 md:px-12 rounded-3xl"
         style={{
           background: "linear-gradient(90deg, var(--c-orange), var(--c-orange-bright))",
         }}
@@ -89,6 +92,7 @@ export default function Footer() {
             </a>
           </div>
         </div>
+      </div>
       </div>
 
       {/* Main footer */}
