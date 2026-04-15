@@ -1,6 +1,16 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { GlobePulse } from "./ui/globe-pulse";
+
+const globeMarkers = [
+  { id: "br", location: [-15.78, -47.93] as [number, number], delay: 0 },
+  { id: "us", location: [38.90, -77.04] as [number, number], delay: 0.3 },
+  { id: "mx", location: [19.43, -99.13] as [number, number], delay: 0.6 },
+  { id: "co", location: [4.71, -74.07] as [number, number], delay: 0.9 },
+  { id: "pt", location: [38.72, -9.14] as [number, number], delay: 1.2 },
+  { id: "de", location: [52.52, 13.40] as [number, number], delay: 1.5 },
+];
 
 const stats = [
   {
@@ -149,27 +159,54 @@ export default function Stats() {
           ))}
         </div>
 
+        {/* Globe — presença internacional */}
         <div
-          className={`mt-20 text-center transition-all duration-700 delay-500 ${
+          className={`mt-24 grid lg:grid-cols-2 gap-12 lg:gap-16 items-center transition-all duration-700 delay-300 ${
             triggered ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
-          <div
-            className="inline-flex items-center gap-3 px-6 py-3 rounded-full text-sm"
-            style={{
-              background: "var(--bg-overlay)",
-              border: "1px solid var(--b-visible)",
-              color: "var(--t-secondary)",
-            }}
-          >
-            <span
-              className="w-2 h-2 rounded-full"
-              style={{
-                background: "var(--c-orange)",
-                animation: "fadeIn 1s ease-in-out infinite alternate",
-              }}
+          <div>
+            <div className="label-tag mb-6">Presença Global</div>
+            <h3 className="text-section-title mb-6">
+              Onde a C2R{" "}
+              <span className="text-gradient-orange">atua.</span>
+            </h3>
+            <p
+              className="text-base leading-relaxed mb-8 max-w-md"
+              style={{ color: "var(--t-secondary)" }}
+            >
+              Atendemos clientes a partir do Brasil, com operações e parcerias
+              ativas em seis países — conectando startups brasileiras a
+              investidores, operações e regulação internacional.
+            </p>
+            <div className="grid grid-cols-2 gap-x-6 gap-y-3">
+              {[
+                { flag: "🇧🇷", name: "Brasil" },
+                { flag: "🇺🇸", name: "Estados Unidos" },
+                { flag: "🇲🇽", name: "México" },
+                { flag: "🇨🇴", name: "Colômbia" },
+                { flag: "🇵🇹", name: "Portugal" },
+                { flag: "🇩🇪", name: "Alemanha" },
+              ].map((c) => (
+                <div key={c.name} className="flex items-center gap-3">
+                  <span
+                    className="w-1.5 h-1.5 rounded-full"
+                    style={{ background: "var(--c-orange)" }}
+                  />
+                  <span className="text-sm font-medium" style={{ color: "var(--t-primary)" }}>
+                    {c.name}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="flex justify-center items-center">
+            <GlobePulse
+              markers={globeMarkers}
+              className="w-full max-w-[520px]"
+              speed={0.0025}
             />
-            Atendemos clientes em todo o Brasil e no exterior
           </div>
         </div>
       </div>
