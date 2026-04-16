@@ -67,18 +67,9 @@
   letter-spacing: -0.025em;
 }
 
-/* ─── Hero panel ────────────────────────────────── */
-.hero-panel {
-  box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.03) inset;
-  transition: box-shadow 0.4s, transform 0.4s;
-}
-.hero-panel:hover {
-  box-shadow: 0 24px 72px rgba(0,0,0,0.5), 0 0 60px rgba(201,74,26,0.06);
-  transform: translateY(-2px);
-}
-.hero-panel:hover .hero-panel-glow {
-  opacity: 1 !important;
-  transition: opacity 0.3s;
+/* ─── Hero portrait ─────────────────────────────── */
+.hero-portrait-wrap {
+  transition: transform 0.5s cubic-bezier(.22,.68,0,1);
 }
 
 .text-section-title {

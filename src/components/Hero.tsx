@@ -1,8 +1,7 @@
 "use client";
 
-import { useEffect, useRef } from "react";
 import Image from "next/image";
-import { ArrowRight, Zap, Shield, Globe, TrendingUp, Users, Scale } from "lucide-react";
+import { ArrowRight, Zap, Shield, Globe } from "lucide-react";
 
 const badges = [
   { icon: Zap, label: "100% Digital" },
@@ -10,32 +9,7 @@ const badges = [
   { icon: Globe, label: "Atendimento Nacional" },
 ];
 
-const panelStats = [
-  { value: "+18", label: "Anos", icon: Scale },
-  { value: "+5mi", label: "Investimentos", icon: TrendingUp },
-  { value: "18+", label: "Estados", icon: Globe },
-  { value: "24h", label: "Resposta", icon: Zap },
-];
-
 export default function Hero() {
-  const cardRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const card = cardRef.current;
-    if (!card) return;
-
-    const handleMouseMove = (e: MouseEvent) => {
-      const rect = card.getBoundingClientRect();
-      const x = ((e.clientX - rect.left) / rect.width) * 100;
-      const y = ((e.clientY - rect.top) / rect.height) * 100;
-      card.style.setProperty("--mouse-x", `${x}%`);
-      card.style.setProperty("--mouse-y", `${y}%`);
-    };
-
-    card.addEventListener("mousemove", handleMouseMove);
-    return () => card.removeEventListener("mousemove", handleMouseMove);
-  }, []);
-
   return (
     <section
       id="hero"
@@ -66,17 +40,9 @@ export default function Hero() {
         </svg>
       </div>
 
-      {/* Vertical accent line */}
-      <div
-        className="absolute top-0 right-1/3 w-px h-full pointer-events-none"
-        style={{
-          background: "linear-gradient(to bottom, transparent, var(--b-orange) 40%, var(--b-orange) 60%, transparent)",
-        }}
-      />
-
       {/* Content */}
-      <div className="section-container relative z-10 pt-44 md:pt-52 lg:pt-56 pb-24 grid lg:grid-cols-2 gap-16 items-center">
-        {/* Left */}
+      <div className="section-container relative z-10 pt-44 md:pt-52 lg:pt-56 pb-24 grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+        {/* Left — copy */}
         <div>
           <div
             className="label-tag mb-8 anim-fade"
@@ -151,39 +117,94 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Right — unified dashboard panel */}
-        <div className="hidden lg:block anim-up" style={{ animationDelay: "0.35s" }}>
-          <div
-            ref={cardRef}
-            className="hero-panel rounded-2xl overflow-hidden relative"
-            style={{
-              background: "var(--bg-surface)",
-              border: "1px solid var(--b-visible)",
-            }}
-          >
-            {/* Spotlight follow effect */}
+        {/* Right — sócios portrait */}
+        <div className="hidden lg:block anim-up relative" style={{ animationDelay: "0.3s" }}>
+          <div className="hero-portrait-wrap relative">
+            {/* Decorative orange border accent — top-right offset */}
             <div
-              className="absolute inset-0 pointer-events-none opacity-0 hero-panel-glow"
+              className="absolute -top-4 -right-4 w-full h-full rounded-2xl pointer-events-none"
               style={{
-                background: "radial-gradient(400px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(201,74,26,0.08), transparent 60%)",
+                border: "2px solid var(--c-orange)",
+                opacity: 0.2,
               }}
             />
 
-            {/* Header bar */}
+            {/* Main photo container */}
             <div
-              className="relative z-10 flex items-center justify-between px-6 py-4"
-              style={{ borderBottom: "1px solid var(--b-subtle)" }}
+              className="relative rounded-2xl overflow-hidden"
+              style={{
+                aspectRatio: "4 / 5",
+                boxShadow: "0 32px 80px rgba(0,0,0,0.5), 0 0 0 1px var(--b-visible)",
+              }}
             >
-              <div className="flex items-center gap-3">
-                <Image
-                  src="/logo.png"
-                  alt="C2R Advocacia"
-                  width={100}
-                  height={40}
-                  className="h-7 w-auto"
-                />
+              <Image
+                src="/socios.jpg"
+                alt="Sócios C2R Advocacia"
+                fill
+                className="object-cover"
+                style={{ filter: "saturate(0.92) contrast(1.05)" }}
+                sizes="(min-width: 1024px) 50vw, 100vw"
+                priority
+              />
+
+              {/* Bottom gradient for text legibility */}
+              <div
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                  background: "linear-gradient(180deg, transparent 50%, rgba(8,8,8,0.85) 100%)",
+                }}
+              />
+
+              {/* Bottom overlay info */}
+              <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
+                <div className="flex items-center gap-3 mb-3">
+                  <div
+                    className="w-9 h-9 rounded-lg flex items-center justify-center"
+                    style={{
+                      background: "linear-gradient(135deg, var(--c-orange), var(--c-orange-bright))",
+                    }}
+                  >
+                    <Shield size={15} className="text-white" />
+                  </div>
+                  <div>
+                    <div className="text-sm font-semibold" style={{ color: "var(--t-primary)" }}>
+                      C2R Advocacia
+                    </div>
+                    <div className="text-xs" style={{ color: "var(--t-secondary)" }}>
+                      Florianópolis, SC
+                    </div>
+                  </div>
+                </div>
+                <div
+                  className="flex gap-6"
+                  style={{ borderTop: "1px solid rgba(255,255,255,0.1)", paddingTop: "12px" }}
+                >
+                  <div>
+                    <div className="text-xl font-semibold" style={{ color: "var(--t-primary)" }}>+18</div>
+                    <div className="text-[10px] uppercase tracking-wider" style={{ color: "var(--t-muted)" }}>anos</div>
+                  </div>
+                  <div>
+                    <div className="text-xl font-semibold" style={{ color: "var(--t-primary)" }}>+5mi</div>
+                    <div className="text-[10px] uppercase tracking-wider" style={{ color: "var(--t-muted)" }}>investimentos</div>
+                  </div>
+                  <div>
+                    <div className="text-xl font-semibold" style={{ color: "var(--t-primary)" }}>100%</div>
+                    <div className="text-[10px] uppercase tracking-wider" style={{ color: "var(--t-muted)" }}>digital</div>
+                  </div>
+                </div>
               </div>
-              <div className="flex items-center gap-2">
+            </div>
+
+            {/* Small floating accent card — bottom-left offset */}
+            <div
+              className="absolute -bottom-5 -left-5 px-5 py-3.5 rounded-xl float-alt z-20"
+              style={{
+                background: "var(--bg-overlay)",
+                border: "1px solid var(--b-orange)",
+                boxShadow: "0 12px 40px rgba(0,0,0,0.5)",
+              }}
+            >
+              <div className="flex items-center gap-2.5">
                 <span
                   className="w-2 h-2 rounded-full"
                   style={{
@@ -192,96 +213,10 @@ export default function Hero() {
                     animation: "fadeIn 1.5s ease infinite alternate",
                   }}
                 />
-                <span className="text-xs font-medium" style={{ color: "var(--t-muted)" }}>
-                  Disponível agora
+                <span className="text-xs font-semibold" style={{ color: "var(--t-primary)" }}>
+                  Atendimento ativo agora
                 </span>
               </div>
-            </div>
-
-            {/* Sócios photo band */}
-            <div className="relative z-10 overflow-hidden" style={{ height: 200 }}>
-              <Image
-                src="/socios.jpg"
-                alt="Sócios C2R Advocacia"
-                fill
-                className="object-cover object-top"
-                style={{ filter: "saturate(0.9) contrast(1.05)" }}
-                sizes="(min-width: 1024px) 50vw, 100vw"
-              />
-              <div
-                className="absolute inset-0"
-                style={{
-                  background: "linear-gradient(180deg, transparent 40%, var(--bg-surface) 100%)",
-                }}
-              />
-              <div className="absolute bottom-4 left-6 right-6 z-10">
-                <div className="flex items-center gap-2">
-                  <Users size={13} style={{ color: "var(--c-orange-bright)" }} />
-                  <span className="text-xs font-semibold tracking-wider uppercase" style={{ color: "var(--c-orange-bright)" }}>
-                    Sócios fundadores
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            {/* Stats grid */}
-            <div className="relative z-10 grid grid-cols-4 gap-0">
-              {panelStats.map(({ value, label, icon: Icon }, i) => (
-                <div
-                  key={label}
-                  className="flex flex-col items-center py-5 px-2 text-center"
-                  style={{
-                    borderRight: i < 3 ? "1px solid var(--b-subtle)" : "none",
-                  }}
-                >
-                  <Icon size={14} className="mb-2" style={{ color: "var(--c-orange)" }} />
-                  <div
-                    className="text-lg font-semibold leading-none mb-1"
-                    style={{ color: "var(--t-primary)" }}
-                  >
-                    {value}
-                  </div>
-                  <div className="text-[10px] uppercase tracking-wider font-medium" style={{ color: "var(--t-muted)" }}>
-                    {label}
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Bottom bar */}
-            <div
-              className="relative z-10 px-6 py-4 flex items-center justify-between"
-              style={{
-                borderTop: "1px solid var(--b-subtle)",
-                background: "rgba(201,74,26,0.04)",
-              }}
-            >
-              <div className="flex items-center gap-3">
-                <div
-                  className="w-8 h-8 rounded-lg flex items-center justify-center"
-                  style={{ background: "linear-gradient(135deg, var(--c-orange), var(--c-orange-bright))" }}
-                >
-                  <Zap size={14} className="text-white" />
-                </div>
-                <div>
-                  <div className="text-xs font-semibold" style={{ color: "var(--t-primary)" }}>
-                    Assessoria digital e ágil
-                  </div>
-                  <div className="text-[11px]" style={{ color: "var(--t-muted)" }}>
-                    Contratos, compliance e consultoria
-                  </div>
-                </div>
-              </div>
-              <a
-                href="#contato"
-                className="text-xs font-semibold px-4 py-2 rounded-lg transition-all duration-200"
-                style={{
-                  background: "var(--c-orange)",
-                  color: "white",
-                }}
-              >
-                Agendar
-              </a>
             </div>
           </div>
         </div>

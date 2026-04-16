@@ -142,11 +142,11 @@ export default function About() {
               style={{ background: "var(--c-orange-glow)", filter: "blur(60px)" }}
             />
 
-            {/* Sócios photo */}
+            {/* Team photo */}
             <div className="relative z-10 mb-8 -mx-8 -mt-8 overflow-hidden" style={{ borderBottom: "1px solid var(--b-visible)" }}>
               <Image
-                src="/socios.jpg"
-                alt="Sócios C2R Advocacia"
+                src="/team.jpg"
+                alt="Equipe C2R Advocacia"
                 width={1200}
                 height={800}
                 className="w-full h-72 object-cover"
