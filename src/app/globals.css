@@ -67,11 +67,6 @@
   letter-spacing: -0.025em;
 }
 
-/* ─── Hero portrait ─────────────────────────────── */
-.hero-portrait-wrap {
-  transition: transform 0.5s cubic-bezier(.22,.68,0,1);
-}
-
 .text-section-title {
   font-size: clamp(2rem, 4vw, 3.5rem);
   font-weight: 600;
