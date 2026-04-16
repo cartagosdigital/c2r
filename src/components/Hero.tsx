@@ -1,43 +1,8 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { ArrowRight, Zap, Shield, Globe } from "lucide-react";
-
-function C2RMark({ className }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 200 200"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className={className}
-    >
-      <path
-        d="M30 55 L85 30 L85 80 L30 105 Q10 120 30 135 L85 110 L85 80"
-        stroke="white"
-        strokeWidth="3"
-        fill="none"
-        strokeLinejoin="round"
-        strokeLinecap="round"
-      />
-      <path d="M100 30 L150 52 L150 78 L100 56 Z" fill="white" />
-      <path d="M100 83 L150 105 L150 131 L100 109 Z" fill="white" />
-      <path
-        d="M162 30 L180 52 L162 74 L144 52 Z"
-        stroke="white"
-        strokeWidth="2.5"
-        fill="none"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M162 74 L180 96 L162 118"
-        stroke="white"
-        strokeWidth="2.5"
-        fill="none"
-        strokeLinecap="round"
-      />
-    </svg>
-  );
-}
+import Image from "next/image";
+import { ArrowRight, Zap, Shield, Globe, TrendingUp, Users, Scale } from "lucide-react";
 
 const badges = [
   { icon: Zap, label: "100% Digital" },
@@ -45,18 +10,30 @@ const badges = [
   { icon: Globe, label: "Atendimento Nacional" },
 ];
 
+const panelStats = [
+  { value: "+18", label: "Anos", icon: Scale },
+  { value: "+5mi", label: "Investimentos", icon: TrendingUp },
+  { value: "18+", label: "Estados", icon: Globe },
+  { value: "24h", label: "Resposta", icon: Zap },
+];
+
 export default function Hero() {
-  const parallaxRef = useRef<HTMLDivElement>(null);
+  const cardRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const card = cardRef.current;
+    if (!card) return;
+
     const handleMouseMove = (e: MouseEvent) => {
-      if (!parallaxRef.current) return;
-      const xPct = (e.clientX / window.innerWidth - 0.5) * 18;
-      const yPct = (e.clientY / window.innerHeight - 0.5) * 18;
-      parallaxRef.current.style.transform = `translate(${xPct}px, ${yPct}px)`;
+      const rect = card.getBoundingClientRect();
+      const x = ((e.clientX - rect.left) / rect.width) * 100;
+      const y = ((e.clientY - rect.top) / rect.height) * 100;
+      card.style.setProperty("--mouse-x", `${x}%`);
+      card.style.setProperty("--mouse-y", `${y}%`);
     };
-    window.addEventListener("mousemove", handleMouseMove, { passive: true });
-    return () => window.removeEventListener("mousemove", handleMouseMove);
+
+    card.addEventListener("mousemove", handleMouseMove);
+    return () => card.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
   return (
@@ -89,15 +66,6 @@ export default function Hero() {
         </svg>
       </div>
 
-      {/* Ghost C2R mark */}
-      <div
-        ref={parallaxRef}
-        className="absolute right-[-60px] top-1/2 -translate-y-1/2 transition-transform duration-500 ease-out pointer-events-none"
-        style={{ opacity: 0.04 }}
-      >
-        <C2RMark className="w-[540px] h-[540px] float" />
-      </div>
-
       {/* Vertical accent line */}
       <div
         className="absolute top-0 right-1/3 w-px h-full pointer-events-none"
@@ -107,7 +75,7 @@ export default function Hero() {
       />
 
       {/* Content */}
-      <div className="section-container relative z-10 pt-40 md:pt-44 lg:pt-48 pb-24 grid lg:grid-cols-2 gap-12 items-center">
+      <div className="section-container relative z-10 pt-44 md:pt-52 lg:pt-56 pb-24 grid lg:grid-cols-2 gap-16 items-center">
         {/* Left */}
         <div>
           <div
@@ -122,7 +90,7 @@ export default function Hero() {
           </div>
 
           <h1
-            className="text-hero mb-6 anim-up"
+            className="text-hero-refined mb-6 anim-up"
             style={{ animationDelay: "0.1s" }}
           >
             O Jurídico
@@ -183,64 +151,137 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Right — floating cards */}
-        <div className="hidden lg:flex flex-col gap-4 items-end">
+        {/* Right — unified dashboard panel */}
+        <div className="hidden lg:block anim-up" style={{ animationDelay: "0.35s" }}>
           <div
-            className="float p-5 rounded-2xl max-w-xs w-full"
+            ref={cardRef}
+            className="hero-panel rounded-2xl overflow-hidden relative"
             style={{
-              background: "var(--bg-overlay)",
-              border: "1px solid var(--b-subtle)",
-              animationDelay: "0s",
+              background: "var(--bg-surface)",
+              border: "1px solid var(--b-visible)",
             }}
           >
-            <div className="flex items-center gap-3 mb-3">
+            {/* Spotlight follow effect */}
+            <div
+              className="absolute inset-0 pointer-events-none opacity-0 hero-panel-glow"
+              style={{
+                background: "radial-gradient(400px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(201,74,26,0.08), transparent 60%)",
+              }}
+            />
+
+            {/* Header bar */}
+            <div
+              className="relative z-10 flex items-center justify-between px-6 py-4"
+              style={{ borderBottom: "1px solid var(--b-subtle)" }}
+            >
+              <div className="flex items-center gap-3">
+                <Image
+                  src="/logo.png"
+                  alt="C2R Advocacia"
+                  width={100}
+                  height={40}
+                  className="h-7 w-auto"
+                />
+              </div>
+              <div className="flex items-center gap-2">
+                <span
+                  className="w-2 h-2 rounded-full"
+                  style={{
+                    background: "#22c55e",
+                    boxShadow: "0 0 6px rgba(34,197,94,0.5)",
+                    animation: "fadeIn 1.5s ease infinite alternate",
+                  }}
+                />
+                <span className="text-xs font-medium" style={{ color: "var(--t-muted)" }}>
+                  Disponível agora
+                </span>
+              </div>
+            </div>
+
+            {/* Sócios photo band */}
+            <div className="relative z-10 overflow-hidden" style={{ height: 200 }}>
+              <Image
+                src="/socios.jpg"
+                alt="Sócios C2R Advocacia"
+                fill
+                className="object-cover object-top"
+                style={{ filter: "saturate(0.9) contrast(1.05)" }}
+                sizes="(min-width: 1024px) 50vw, 100vw"
+              />
               <div
-                className="w-10 h-10 rounded-xl flex items-center justify-center"
-                style={{ background: "linear-gradient(135deg, var(--c-orange), var(--c-orange-bright))" }}
+                className="absolute inset-0"
+                style={{
+                  background: "linear-gradient(180deg, transparent 40%, var(--bg-surface) 100%)",
+                }}
+              />
+              <div className="absolute bottom-4 left-6 right-6 z-10">
+                <div className="flex items-center gap-2">
+                  <Users size={13} style={{ color: "var(--c-orange-bright)" }} />
+                  <span className="text-xs font-semibold tracking-wider uppercase" style={{ color: "var(--c-orange-bright)" }}>
+                    Sócios fundadores
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Stats grid */}
+            <div className="relative z-10 grid grid-cols-4 gap-0">
+              {panelStats.map(({ value, label, icon: Icon }, i) => (
+                <div
+                  key={label}
+                  className="flex flex-col items-center py-5 px-2 text-center"
+                  style={{
+                    borderRight: i < 3 ? "1px solid var(--b-subtle)" : "none",
+                  }}
+                >
+                  <Icon size={14} className="mb-2" style={{ color: "var(--c-orange)" }} />
+                  <div
+                    className="text-lg font-semibold leading-none mb-1"
+                    style={{ color: "var(--t-primary)" }}
+                  >
+                    {value}
+                  </div>
+                  <div className="text-[10px] uppercase tracking-wider font-medium" style={{ color: "var(--t-muted)" }}>
+                    {label}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Bottom bar */}
+            <div
+              className="relative z-10 px-6 py-4 flex items-center justify-between"
+              style={{
+                borderTop: "1px solid var(--b-subtle)",
+                background: "rgba(201,74,26,0.04)",
+              }}
+            >
+              <div className="flex items-center gap-3">
+                <div
+                  className="w-8 h-8 rounded-lg flex items-center justify-center"
+                  style={{ background: "linear-gradient(135deg, var(--c-orange), var(--c-orange-bright))" }}
+                >
+                  <Zap size={14} className="text-white" />
+                </div>
+                <div>
+                  <div className="text-xs font-semibold" style={{ color: "var(--t-primary)" }}>
+                    Assessoria digital e ágil
+                  </div>
+                  <div className="text-[11px]" style={{ color: "var(--t-muted)" }}>
+                    Contratos, compliance e consultoria
+                  </div>
+                </div>
+              </div>
+              <a
+                href="#contato"
+                className="text-xs font-semibold px-4 py-2 rounded-lg transition-all duration-200"
+                style={{
+                  background: "var(--c-orange)",
+                  color: "white",
+                }}
               >
-                <Zap size={18} className="text-white" />
-              </div>
-              <div>
-                <div className="font-semibold text-sm" style={{ color: "var(--t-primary)" }}>
-                  Assessoria Ágil
-                </div>
-                <div className="text-xs" style={{ color: "var(--t-muted)" }}>
-                  Resposta em até 24h
-                </div>
-              </div>
-            </div>
-            <p className="text-xs leading-relaxed" style={{ color: "var(--t-secondary)" }}>
-              Contratos, compliance e consultoria jurídica com a velocidade que sua startup precisa.
-            </p>
-          </div>
-
-          <div
-            className="float p-5 rounded-2xl max-w-xs w-full mr-8"
-            style={{
-              background: "rgba(201,74,26,0.10)",
-              border: "1px solid var(--b-orange)",
-              animationDelay: "2s",
-            }}
-          >
-            <div className="text-4xl font-semibold text-gradient-orange mb-1">+5mi</div>
-            <div className="text-sm" style={{ color: "var(--t-secondary)" }}>
-              em investimentos assessorados
-            </div>
-          </div>
-
-          <div
-            className="float p-5 rounded-2xl max-w-[200px] w-full"
-            style={{
-              background: "var(--bg-overlay)",
-              border: "1px solid var(--b-subtle)",
-              animationDelay: "4s",
-            }}
-          >
-            <div className="text-3xl font-semibold mb-1" style={{ color: "var(--t-primary)" }}>
-              +18
-            </div>
-            <div className="text-xs" style={{ color: "var(--t-secondary)" }}>
-              anos de expertise jurídica
+                Agendar
+              </a>
             </div>
           </div>
         </div>
